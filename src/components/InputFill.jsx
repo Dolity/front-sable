@@ -44,7 +44,7 @@ export default function InputFill() {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post('/send-email', 
+      const response = await axios.post('/sendemail', 
       { 
         valueTo, 
         valueSubject, 
