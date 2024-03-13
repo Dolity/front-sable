@@ -50,8 +50,8 @@ export default function InputFill() {
         valueSubject, 
         valueText
       }
-      ) // ส่งข้อมูลไปยัง API ของคุณ
-      console.log(response.data); // พิมพ์ผลลัพธ์จากการส่งอีเมล์ไปยังหลังบ้าน
+      )
+      console.log(response.data)
     } catch (error) {
       console.error('Error sending email:', error);
     }
