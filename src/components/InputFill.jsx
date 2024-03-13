@@ -6,43 +6,56 @@ import TextFieldsIcon from '@mui/icons-material/TextFields';
 import InsertLinkOutlinedIcon from '@mui/icons-material/InsertLinkOutlined';
 import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
 import SentimentSatisfiedOutlinedIcon from '@mui/icons-material/SentimentSatisfiedOutlined';
+import axios from 'axios';
 
 
 export default function InputFill() {
-  const [value, setValue] = useState('');
+  const [valueTo, setValueTo] = useState('');
+  const [valueSubject, setValueSubject] = useState('');
+  const [valueText, setvalueText] = useState('');
 
   const handleBoldClick = () => {
-    document.execCommand('bold');
+    console.log('bold');
   };
 
   const handleItalicClick = () => {
-    document.execCommand('italic');
+    console.log('bold');
   };
 
   const handleUnderlineClick = () => {
-    document.execCommand('underline');
+    console.log('Underline');
   };
 
-  const handleFontSizeChange = (size) => {
-    document.execCommand('fontSize', false, size);
+  const handleFontSizeChange = () => {
+    console.log('Fontsize');
   };
 
   const handleLinkClick = () => {
-    const url = prompt('Enter URL:');
-    document.execCommand('createLink', false, url);
+    console.log('Link');
   };
 
   const handleImageClick = () => {
-    const url = prompt('Enter image URL:');
-    document.execCommand('insertImage', false, url);
+    console.log('Image');
   };
 
   const handleEmojiClick = () => {
-    const emoji = prompt('Enter emoji:');
-    document.execCommand('insertText', false, emoji);
+    console.log('Emoji');
   };
 
-
+  const handleSubmit = async () => {
+    try {
+      const response = await axios.post('/send-email', 
+      { 
+        valueTo, 
+        valueSubject, 
+        valueText
+      }
+      ) // ส่งข้อมูลไปยัง API ของคุณ
+      console.log(response.data); // พิมพ์ผลลัพธ์จากการส่งอีเมล์ไปยังหลังบ้าน
+    } catch (error) {
+      console.error('Error sending email:', error);
+    }
+  };
 
     return (
         <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
@@ -56,14 +69,19 @@ export default function InputFill() {
 
                   <input
                     className="border-b border-gray-300 focus:border-blue-500 focus:outline-none px-2 py-1 mb-6 w-full"
+                    value={valueSubject}
+                    onChange={(e) => setValueSubject(e.target.value)}
                   />
 
                   <input
                     className="border-b border-gray-300 focus:border-blue-500 focus:outline-none px-2 py-1 mb-6 w-full"
+                    value={valueTo}
+                    onChange={(e) => setValueTo(e.target.value)}
                   />
                   
                   <textarea className="w-full h-24 p-2 resize-none rounded-lg border-gray-300 focus:ring-blue-500 focus:outline-none"  placeholder="Text here">
-                    
+                    value={valueText}
+                    onChange={(e) => setvalueText(e.target.value)}
                   </textarea>
 
                   <div className="flex justify-between items-center mt-4">
@@ -101,9 +119,9 @@ export default function InputFill() {
 
                     </div>
                   </div>
-                  <button className="w-full mt-6 bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+                  <button className="w-full mt-6 bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onClick={handleSubmit}>
                       Send
-                    </button>
+                  </button>
 
               </div>
             </div>
